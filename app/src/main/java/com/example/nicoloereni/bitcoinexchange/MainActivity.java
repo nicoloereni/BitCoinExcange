@@ -1,9 +1,12 @@
-package com.example.nicoloereni.bitcoinexcangetest;
+package com.example.nicoloereni.bitcoinexchange;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -16,6 +19,9 @@ public class MainActivity extends ActionBarActivity {
         // restituisce una lista contenente le info sui bitcoin e l'oro trovate qui: "http://coinabul.com/api.php"
         // prima lista contiene oro e bitcoin in dollare
         // tap vai a una seconda lista e vedi il resto
+
+
+
     }
 
 
