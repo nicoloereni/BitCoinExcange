@@ -3,16 +3,23 @@ package com.example.nicoloereni.bitcoinexchange;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.inject.Inject;
+
 public class ValueExchangeFactory {
 
-    public static final String URL_BITCOIN_INFO = "https://blockchain.info/it/ticker";
+    private final HttpRequest httpRequest;
 
-    public ArrayList<ValueExchangeModel> all(HttpRequest httpRequest) {
+    @Inject
+    public ValueExchangeFactory(HttpRequest httpRequest){
+        this.httpRequest = httpRequest;
+    }
+
+    public ArrayList<ValueExchangeModel> all() {
         ArrayList<ValueExchangeModel> result = new ArrayList<>();
 
-        Iterator<String> keys = httpRequest.getAllJsonObjectValue(URL_BITCOIN_INFO).keys();
+        Iterator<String> keys = httpRequest.getAllJsonObjectValue().keys();
         while(keys.hasNext()){
-            result.add(new ValueExchangeModel(httpRequest.getJsonObjectValue(URL_BITCOIN_INFO, keys.next())));
+            result.add(new ValueExchangeModel(httpRequest.getJsonObjectValue(keys.next())));
         }
         return result;
     }

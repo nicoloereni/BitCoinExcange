@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.nicoloereni.bitcoinexchange.module.ValueExchangeFactoryModule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             protected ArrayList doInBackground(Object[] params) {
 
-                ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory();
-                ArrayList<ValueExchangeModel> values = valueExchangeFactory.all(new HttpRequest());
+                ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory(new HttpRequest(ValueExchangeFactoryModule.URL_BITCOIN_INFO));
+                ArrayList<ValueExchangeModel> values = valueExchangeFactory.all();
 
                 ArrayList result = new ArrayList();
 

@@ -11,13 +11,18 @@ import java.net.URL;
 
 public class HttpRequest
 {
+    private final String url;
     private String valueData;
 
-    public String getAllStringValueData(String urlString)
+    public HttpRequest(String url) {
+        this.url = url;
+    }
+
+    public String getAllStringValueData()
     {
         try {
 
-            URL url = new URL(urlString);
+            URL url = new URL(this.url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -29,19 +34,19 @@ public class HttpRequest
         }
     }
 
-    public JSONObject getJsonObjectValue(String urlString, String value) {
+    public JSONObject getJsonObjectValue(String value) {
         try {
 
-            return getAllJsonObjectValue(urlString).getJSONObject(value);
+            return getAllJsonObjectValue().getJSONObject(value);
         } catch (JSONException e) {
             return null;
         }
     }
 
-    public JSONObject getAllJsonObjectValue(String urlString) {
+    public JSONObject getAllJsonObjectValue() {
         try {
             if(valueData == null){
-                valueData = getAllStringValueData(urlString);
+                valueData = getAllStringValueData();
             }
             return new JSONObject(valueData);
         } catch (JSONException e) {
