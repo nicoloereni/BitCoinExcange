@@ -1,4 +1,4 @@
-package com.example.nicoloereni.bitcoinexchange.test;
+package com.example.nicoloereni.bitcoinexchange.tests;
 
 
 import android.test.AndroidTestCase;

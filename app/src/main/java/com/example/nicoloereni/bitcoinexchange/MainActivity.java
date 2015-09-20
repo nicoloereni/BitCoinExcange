@@ -1,12 +1,21 @@
 package com.example.nicoloereni.bitcoinexchange;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.nicoloereni.bitcoinexchange.R.layout.list_item;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -20,7 +29,31 @@ public class MainActivity extends ActionBarActivity {
         // prima lista contiene oro e bitcoin in dollare
         // tap vai a una seconda lista e vedi il resto
 
+        final ListView listView = (ListView) findViewById(R.id.exchange_list);
 
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected ArrayList doInBackground(Object[] params) {
+
+                ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory();
+                ArrayList<ValueExchangeModel> values = valueExchangeFactory.all(new HttpBitCoinChangeRequest());
+
+                ArrayList result = new ArrayList();
+
+                for(ValueExchangeModel value : values){
+                    result.add(value.symbol);
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                listView.setAdapter(new ArrayAdapter(MainActivity.this, list_item, R.id.textViewList, (List)o));
+            }
+        };
+
+        asyncTask.execute();
 
     }
 

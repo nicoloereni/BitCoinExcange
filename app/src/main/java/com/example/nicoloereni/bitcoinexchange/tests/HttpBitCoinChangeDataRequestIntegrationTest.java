@@ -1,7 +1,6 @@
-package com.example.nicoloereni.bitcoinexchange.test;
+package com.example.nicoloereni.bitcoinexchange.tests;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import com.example.nicoloereni.bitcoinexchange.HttpBitCoinChangeRequest;
 
