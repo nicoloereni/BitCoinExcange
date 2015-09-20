@@ -2,7 +2,7 @@ package com.example.nicoloereni.bitcoinexchange.tests;
 
 import android.test.AndroidTestCase;
 
-import com.example.nicoloereni.bitcoinexchange.HttpBitCoinChangeRequest;
+import com.example.nicoloereni.bitcoinexchange.HttpRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,25 +10,26 @@ import org.json.JSONObject;
 public class HttpBitCoinChangeDataRequestIntegrationTest extends AndroidTestCase
 {
 
-    private HttpBitCoinChangeRequest httpBitCoinChangeRequest;
+    private static final String URL_BITCOIN_INFO = "https://blockchain.info/it/ticker";
+    private HttpRequest httpRequest;
 
     public void setUp()
     {
-        httpBitCoinChangeRequest = new HttpBitCoinChangeRequest();
+        httpRequest = new HttpRequest();
     }
 
     public void testGetBitCoinExchangeString()
     {
-        String httpBitCoinChangeRequestData = httpBitCoinChangeRequest.getAllStringValueData();
+        String httpBitCoinChangeRequestData = httpRequest.getAllStringValueData(URL_BITCOIN_INFO);
         assertNotNull(httpBitCoinChangeRequestData);
         assertFalse(httpBitCoinChangeRequestData.isEmpty());
     }
 
     public void testGetBitCoinExchangeJsonObject() throws JSONException {
-        JSONObject usdJsonObject = httpBitCoinChangeRequest.getJsonObjectValue("USD");
+        JSONObject usdJsonObject = httpRequest.getJsonObjectValue(URL_BITCOIN_INFO, "USD");
         assertNotNull(usdJsonObject);
         assertEquals("$", usdJsonObject.getString("symbol"));
-        JSONObject iskJsonObject = httpBitCoinChangeRequest.getJsonObjectValue("ISK");
+        JSONObject iskJsonObject = httpRequest.getJsonObjectValue(URL_BITCOIN_INFO, "ISK");
         assertNotNull(iskJsonObject);
         assertEquals("kr", iskJsonObject.getString("symbol"));
     }

@@ -9,15 +9,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpBitCoinChangeRequest
+public class HttpRequest
 {
     private String valueData;
 
-    public String getAllStringValueData()
+    public String getAllStringValueData(String urlString)
     {
         try {
 
-            URL url = new URL("https://blockchain.info/it/ticker");
+            URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -29,19 +29,19 @@ public class HttpBitCoinChangeRequest
         }
     }
 
-    public JSONObject getJsonObjectValue(String value) {
+    public JSONObject getJsonObjectValue(String urlString, String value) {
         try {
 
-            return getAllJsonObjectValue().getJSONObject(value);
+            return getAllJsonObjectValue(urlString).getJSONObject(value);
         } catch (JSONException e) {
             return null;
         }
     }
 
-    public JSONObject getAllJsonObjectValue() {
+    public JSONObject getAllJsonObjectValue(String urlString) {
         try {
             if(valueData == null){
-                valueData = getAllStringValueData();
+                valueData = getAllStringValueData(urlString);
             }
             return new JSONObject(valueData);
         } catch (JSONException e) {

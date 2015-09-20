@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
             protected ArrayList doInBackground(Object[] params) {
 
                 ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory();
-                ArrayList<ValueExchangeModel> values = valueExchangeFactory.all(new HttpBitCoinChangeRequest());
+                ArrayList<ValueExchangeModel> values = valueExchangeFactory.all(new HttpRequest());
 
                 ArrayList result = new ArrayList();
 
