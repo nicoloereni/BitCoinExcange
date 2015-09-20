@@ -1,13 +1,14 @@
 package com.example.nicoloereni.bitcoinexchange;
 
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.nicoloereni.bitcoinexchange.component.DaggerValueExchangeFactoryComponent;
 import com.example.nicoloereni.bitcoinexchange.module.ValueExchangeFactoryModule;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             protected ArrayList doInBackground(Object[] params) {
 
-                ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory(new HttpRequest(ValueExchangeFactoryModule.URL_BITCOIN_INFO));
+                ValueExchangeFactory valueExchangeFactory = getValueExchangeFactoryInstance();
                 ArrayList<ValueExchangeModel> values = valueExchangeFactory.all();
 
                 ArrayList result = new ArrayList();
@@ -53,6 +54,10 @@ public class MainActivity extends ActionBarActivity {
 
         asyncTask.execute();
 
+    }
+
+    private ValueExchangeFactory getValueExchangeFactoryInstance() {
+        return DaggerValueExchangeFactoryComponent.builder().valueExchangeFactoryModule(new ValueExchangeFactoryModule()).build().provideValueExchangeFactory();
     }
 
 
