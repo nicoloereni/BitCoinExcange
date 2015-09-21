@@ -1,18 +1,25 @@
-package com.example.nicoloereni.bitcoinexchange.test;
+package com.example.nicoloereni.bitcoinexchange;
 
+import android.app.Instrumentation;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
-import com.example.nicoloereni.bitcoinexchange.HttpRequest;
-import com.example.nicoloereni.bitcoinexchange.ValueExchangeFactory;
-import com.example.nicoloereni.bitcoinexchange.ValueExchangeModel;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+
 public class ValueExchangeFactoryTest extends AndroidTestCase {
 
-
+    @Mock
     private HttpRequest httpRequest;
-    private final String fakeResponse = "{\n" +
+    private final String FAKE_RESPONSE = "{\n" +
             "  \"USD\" : {\"15m\" : 226.94, \"last\" : 226.94, \"buy\" : 226.31, \"sell\" : 226.89,  \"symbol\" : \"$\"},\n" +
             "  \"ISK\" : {\"15m\" : 28881.29, \"last\" : 28881.29, \"buy\" : 28801.12, \"sell\" : 28874.93,  \"symbol\" : \"kr\"},\n" +
             "  \"HKD\" : {\"15m\" : 1758.82, \"last\" : 1758.82, \"buy\" : 1753.94, \"sell\" : 1758.43,  \"symbol\" : \"$\"},\n" +
@@ -37,9 +44,21 @@ public class ValueExchangeFactoryTest extends AndroidTestCase {
             "  \n" +
             "}";
 
-    public void testCreateValueList() {
 
-        //when(httpRequest.getAllStringValueData()).thenReturn(fakeResponse);
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        System.setProperty(
+                "dexmaker.dexcache",
+                getContext().getCacheDir().getPath());
+        MockitoAnnotations.initMocks(this);
+    }
+
+    public void testCreateValueList() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(FAKE_RESPONSE);
+        when(httpRequest.getAllJsonObjectValue()).thenReturn(jsonObject);
+        when(httpRequest.getJsonObjectValue(anyString())).thenReturn(jsonObject.getJSONObject("USD"));
 
         ValueExchangeFactory valueExchangeFactory = new ValueExchangeFactory(httpRequest);
         ArrayList<ValueExchangeModel> all = valueExchangeFactory.all();
