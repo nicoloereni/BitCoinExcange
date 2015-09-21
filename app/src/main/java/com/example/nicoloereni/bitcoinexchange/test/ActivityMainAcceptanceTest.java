@@ -1,4 +1,4 @@
-package com.example.nicoloereni.bitcoinexchange.tests;
+package com.example.nicoloereni.bitcoinexchange.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
